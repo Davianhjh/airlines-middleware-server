@@ -11,22 +11,22 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
-import com.airline.flight;
-import com.airline.flightManage;
-import com.airline.flightManageRes;
+import com.airline.ticket;
+import com.airline.passengerFlight;
+import com.airline.passengerFlightRes;
 
-@Path("/flightList")  
-public class postFlightList {
+@Path("/ticketList") 
+public class postTicketList {
 	@POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-	public postFlightListRes postList(@Context HttpHeaders hh, postFlightListParam fl) {
-		String airlineCode = null;
-		int dayLap;
-		postFlightListRes res = new postFlightListRes();
+	public postTicketListRes postList(@Context HttpHeaders hh, postTicketListParam tl) {
+		String name = null;
+		String id = null;
+		postTicketListRes res = new postTicketListRes();
 		try {
-			airlineCode = fl.getAirlineCode();
-			dayLap = fl.getDayLap();
+			name = tl.getPassengerName();
+			id = tl.getPassengerID();
 		} catch(RuntimeException e) {
 			e.printStackTrace();
 			res.setFlag("FAIL");
@@ -35,12 +35,12 @@ public class postFlightList {
 			return res;
 		}
 		try {
-			flightManage fm = new flightManage(airlineCode);
-			flightManageRes res2 = fm.getFlightList(dayLap);
+			passengerFlight pf = new passengerFlight(name,id);
+			passengerFlightRes res2 = pf.getTicketList();
 			res.setFlag("SUCCESS");
-			res.setFlights(res2.getFlights());
+			res.setTickets(res2.getTickets());
 			return res;
-		} catch (SQLException e) {
+		} catch(SQLException e) {
 			e.printStackTrace();
 			res.setFlag("FAIL");
 			res.setErrCode(2000);
@@ -49,16 +49,16 @@ public class postFlightList {
 		}
 	}
 	
-	public class postFlightListRes {
+	public class postTicketListRes {
 		private String flag;
 		private int errCode;
 		private String errMsg;
-		private ArrayList<flight> flightList;
+		private ArrayList<ticket> ticketList;
 		
 		public String getFlag() {
 			return flag;
 		}
-		
+
 		public void setFlag(String flag) {
 			this.flag = flag;
 		}
@@ -79,12 +79,12 @@ public class postFlightList {
 			this.errMsg = msg;
 		}
 		
-		public ArrayList<flight> getFlights(){
-			return flightList;
+		public ArrayList<ticket> getTickets(){
+			return ticketList;
 		}
 		
-		public void setFlights(ArrayList<flight> flights) {
-			this.flightList = new ArrayList<flight>(flights);
+		public void setTickets(ArrayList<ticket> tickets) {
+			this.ticketList = new ArrayList<ticket>(tickets);
 		}
 	}
 }
