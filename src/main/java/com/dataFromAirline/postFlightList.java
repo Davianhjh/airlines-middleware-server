@@ -1,4 +1,4 @@
-package com.dataFlowGet;
+package com.dataFromAirline;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

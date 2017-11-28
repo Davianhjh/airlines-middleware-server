@@ -1,4 +1,4 @@
-package com.dataFlowGet;
+package com.dataFromAirline;
 
 public class flight {
 	private String flightNo;

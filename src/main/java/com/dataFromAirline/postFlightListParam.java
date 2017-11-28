@@ -1,4 +1,4 @@
-package com.dataFlowGet;
+package com.dataFromAirline;
 
 public class postFlightListParam {
 	private static final long serialVersionUID = 1L;
